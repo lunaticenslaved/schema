@@ -1,7 +1,7 @@
 import { User } from '../../models';
 
-export interface ActivateResponse {
-  user: User;
+export interface ActivateRequest {
+  activationToken: string;
 }
 
 export interface RefreshResponse {

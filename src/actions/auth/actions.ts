@@ -2,7 +2,7 @@ import { OperationResponse } from '../../models';
 import { client } from '../../utils';
 
 import {
-  ActivateResponse,
+  ActivateRequest,
   RefreshResponse,
   SignInRequest,
   SignInResponse,
@@ -11,7 +11,7 @@ import {
 } from './types';
 
 export const actions = {
-  activate: client.createAction<OperationResponse<ActivateResponse>>({
+  activate: client.createAction<OperationResponse, ActivateRequest>({
     method: 'POST',
     endpoint: 'authApi',
     path: '/auth/activate',
