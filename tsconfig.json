@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["esnext"],
+    "allowJs": false,
+    "skipLibCheck": false,
+    "sourceMap": true,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+
+     /* Bundler mode */
+     "useDefineForClassFields": false,
+     "esModuleInterop": true,
+     "types": ["node"],
+     "module": "NodeNext",
+     "moduleResolution": "NodeNext",
+     "allowSyntheticDefaultImports": true,
+     "resolveJsonModule": true,
+     "isolatedModules": true,
+     "emitDecoratorMetadata": true,
+ 
+     /* Linting */
+     "strict": true,
+     "noUnusedLocals": true,
+     "noUnusedParameters": true,
+     "noImplicitOverride": true,
+     "noFallthroughCasesInSwitch": true,
+     "noImplicitAny": true,
+     "forceConsistentCasingInFileNames": true,
+ 
+     /* Language features */
+     "experimentalDecorators": true,
+
+
+    /* Paths */
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "#": ["./src/index"],
+      "#/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
