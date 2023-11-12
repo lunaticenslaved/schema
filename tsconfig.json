@@ -34,12 +34,11 @@
 
     /* Paths */
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "#": ["./src/index"],
       "#/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "./index.ts"]
 }

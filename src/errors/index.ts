@@ -1,2 +1,5 @@
-export * from './base-error';
-export * from './errors';
+import * as Error from './module';
+
+export { Error };
+
+export * from './module';

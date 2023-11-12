@@ -1,8 +1,6 @@
-import { Schema } from '#';
-
 import { Endpoint } from '#/endpoints';
 import { User } from '#/models';
-import { Client } from '#/utils/client';
+import { Client, Validators } from '#/utils';
 
 export interface Request {
   login: string;
@@ -14,8 +12,8 @@ export interface Response {
 }
 
 export const validators = {
-  login: Schema.Validators.login,
-  password: Schema.Validators.newPassword,
+  login: Validators.login,
+  password: Validators.newPassword,
 };
 
 export function operation(data: Request) {

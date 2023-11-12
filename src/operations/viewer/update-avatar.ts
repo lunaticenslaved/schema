@@ -1,9 +1,8 @@
 import { UploadedFile } from 'express-fileupload';
 
-import { Validators } from '#';
-
 import { Endpoint } from '#/endpoints';
 import { User } from '#/models';
+import { Validators } from '#/utils';
 import { Client } from '#/utils/client';
 
 export namespace UpdateAvatar {
