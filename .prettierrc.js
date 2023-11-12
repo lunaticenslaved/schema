@@ -1,4 +1,4 @@
-{
+module.exports = {
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "singleQuote": true,
   "semi": true,
