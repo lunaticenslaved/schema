@@ -6,8 +6,8 @@
     "skipLibCheck": false,
     "sourceMap": true,
     "composite": false,
-    "declaration": false,
-    "declarationMap": false,
+    "declaration": true,
+    "declarationMap": true,
 
     /* Bundler mode */
     "useDefineForClassFields": false,
