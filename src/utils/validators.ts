@@ -17,15 +17,19 @@ export const email: Validator<string> = zodWrapper(
 );
 
 export const login: Validator<string> = zodWrapper(
-  z.string({
-    required_error: 'Login is required',
-    invalid_type_error: 'Login must be a string',
-  }),
+  z
+    .string({
+      required_error: 'Login is required',
+      invalid_type_error: 'Login must be a string',
+    })
+    .min(3, 'Login should have at least 3 characters'),
 );
 
 export const newPassword: Validator<string> = zodWrapper(
-  z.string({
-    required_error: 'Password is required',
-    invalid_type_error: 'Password must be a string',
-  }),
+  z
+    .string({
+      required_error: 'Password is required',
+      invalid_type_error: 'Password must be a string',
+    })
+    .min(6, 'Password should have at least 6 characters'),
 );
