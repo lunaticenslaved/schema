@@ -1,3 +1,5 @@
-export * as SignIn from './sign-in';
-export * as SignUp from './sign-up';
-export * as Logout from './logout';
+import * as SignIn from './sign-in';
+import * as SignUp from './sign-up';
+import * as Logout from './logout';
+
+export { SignIn, SignUp, Logout };

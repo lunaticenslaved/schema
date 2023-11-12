@@ -1,3 +1,5 @@
+import * as Schema from './module';
+
 export * from './module';
 
-export * as Schema from './module';
+export { Schema };
