@@ -1,7 +1,8 @@
 import { Validators } from '#';
-import { Client } from '#/utils/client';
-import { User } from '#/models';
+
 import { Endpoint } from '#/endpoints';
+import { User } from '#/models';
+import { Client } from '#/utils/client';
 
 export type Request = {
   login: string;
