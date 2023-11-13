@@ -1,7 +1,6 @@
 export enum ApiErrorType {
   ValidationError = 'ValidationError',
   UnknownError = 'UnknownError',
-  AuthenticationError = 'AuthenticationError',
   UnauthorizedError = 'UnauthorizedError',
   ConflictError = 'ConflictError',
   NotFoundError = 'NotFoundError',
@@ -18,10 +17,13 @@ export abstract class ApiError extends Error {
   public messages: string[] = [];
   public status: number = 500;
 
-  constructor({ messages, status = 500 }: ApiErrorProps) {
+  constructor({ messages, status }: ApiErrorProps) {
     super();
 
     this.messages = typeof messages === 'string' ? [messages] : messages;
-    this.status = status;
+
+    if (status) {
+      this.status = status;
+    }
   }
 }
