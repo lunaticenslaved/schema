@@ -1,5 +1,3 @@
-import { UploadedFile } from 'express-fileupload';
-
 import { Endpoint } from '#/endpoints';
 import { User } from '#/models';
 import { Validators } from '#/utils';
@@ -7,7 +5,7 @@ import { Client } from '#/utils/client';
 
 export namespace UpdateAvatar {
   export type Request = {
-    avatar: UploadedFile;
+    avatar: object;
   };
 
   export type Response = {
