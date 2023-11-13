@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { ValidationError } from '#/errors';
 
-export type ValidationResult = null | string | undefined;
+export type ValidationResult = null | string | string[] | undefined;
 export type Validator<T> = (params?: T) => Promise<ValidationResult> | ValidationResult;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ValidationObject = Record<string, Validator<any>>;
@@ -42,7 +42,7 @@ export function zodWrapper<T>(fn: z.ZodType<T>) {
     const result = fn.safeParse(value);
 
     if ('error' in result) {
-      return result.error.message;
+      return result.error.errors.map(({ message }) => message);
     }
 
     return null;
