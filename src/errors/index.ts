@@ -1,5 +1,5 @@
-import * as Error from './module';
+import * as Errors from './module';
 
-export { Error };
+export { Errors };
 
 export * from './module';

@@ -2,12 +2,12 @@ import { Endpoint } from '#/endpoints';
 import { User } from '#/models';
 import { Client, Validators } from '#/utils';
 
-export type Request = {
+export type UpdatePasswordRequest = {
   oldPassword: string;
   newPassword: string;
 };
 
-export type Response = {
+export type UpdatePasswordResponse = {
   user: User;
 };
 
@@ -16,6 +16,7 @@ export const validators = {
   newPassword: Validators.newPassword,
 };
 
-export function operation(data: Request) {
-  return Client.post(Endpoint.create('authApi', '/viewer/password'), data);
-}
+export const action = Client.createOperation<UpdatePasswordResponse, UpdatePasswordRequest>({
+  method: 'post',
+  path: Endpoint.create('authApi', '/viewer/password'),
+});

@@ -2,12 +2,12 @@ import { Endpoint } from '#/endpoints';
 import { User } from '#/models';
 import { Client, Validators } from '#/utils';
 
-export interface Request {
+export interface SignInRequest {
   login: string;
   password: string;
 }
 
-export interface Response {
+export interface SignInResponse {
   user: User;
 }
 
@@ -16,6 +16,7 @@ export const validators = {
   password: Validators.newPassword,
 };
 
-export function operation(data: Request) {
-  return Client.post(Endpoint.create('authApi', '/auth/sign-in'), data);
-}
+export const action = Client.createOperation<SignInResponse, SignInRequest>({
+  method: 'post',
+  path: Endpoint.create('authApi', 'auth/sign-in'),
+});

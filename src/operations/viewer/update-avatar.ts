@@ -1,22 +1,20 @@
 import { Endpoint } from '#/endpoints';
 import { User } from '#/models';
-import { Validators } from '#/utils';
-import { Client } from '#/utils/client';
+import { Client, Validators } from '#/utils';
 
-export namespace UpdateAvatar {
-  export type Request = {
-    avatar: object;
-  };
+export type UpdateAvatarRequest = {
+  avatar: object;
+};
 
-  export type Response = {
-    user: User;
-  };
+export type UpdateAvatarResponse = {
+  user: User;
+};
 
-  export const validators = {
-    avatar: Validators.required('File is required'),
-  };
+export const validators = {
+  avatar: Validators.required('File is required'),
+};
 
-  export function operation(data: Request) {
-    return Client.post(Endpoint.create('authApi', '/viewer/avatar'), data);
-  }
-}
+export const action = Client.createOperation<UpdateAvatarResponse, UpdateAvatarRequest>({
+  method: 'post',
+  path: Endpoint.create('authApi', '/viewer/avatar'),
+});

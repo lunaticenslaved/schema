@@ -7,32 +7,20 @@ export type Validator<T> = (params?: T) => Promise<ValidationResult> | Validatio
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ValidationObject = Record<string, Validator<any>>;
 
-export const validateObj = (rules: ValidationObject) => async (values: Record<string, unknown>) => {
+export const validateRequest = async (rules: ValidationObject, values: Record<string, unknown>) => {
   const errors: string[] = [];
 
   for (const key in rules) {
     const error = await rules[key](values[key]);
 
-    if (error) {
-      errors.push(`${key}: ${error}`);
+    if (typeof error === 'string') {
+      errors.push(error);
+    } else if (Array.isArray(error)) {
+      errors.push(...error);
     }
   }
 
-  const hasErrors = errors.length > 0;
-
-  return {
-    errors: hasErrors ? errors : null,
-    hasErrors,
-  };
-};
-
-export const validateRequest = async (
-  validator: ValidationObject,
-  data: Record<string, unknown>,
-) => {
-  const { errors } = await validateObj(validator)(data);
-
-  if (errors) {
+  if (errors.length > 0) {
     throw new ValidationError({ messages: errors });
   }
 };
