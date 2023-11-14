@@ -14,7 +14,7 @@ export const validators = {
   avatar: Validators.required('File is required'),
 };
 
-export const action = Client.createOperation<UpdateAvatarResponse, UpdateAvatarRequest>({
+export const operation = Client.createOperation<UpdateAvatarResponse, UpdateAvatarRequest>({
   method: 'post',
   path: Endpoint.create('authApi', '/viewer/avatar'),
 });

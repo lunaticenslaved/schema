@@ -16,7 +16,7 @@ export const validators = {
   newPassword: Validators.newPassword,
 };
 
-export const action = Client.createOperation<UpdatePasswordResponse, UpdatePasswordRequest>({
+export const operation = Client.createOperation<UpdatePasswordResponse, UpdatePasswordRequest>({
   method: 'post',
   path: Endpoint.create('authApi', '/viewer/password'),
 });

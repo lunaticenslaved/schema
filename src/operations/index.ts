@@ -31,6 +31,8 @@ export function createOperationWithContext<TContext>(context: TContext) {
 
         return response.status(200).json({ result, error: null });
       } catch (err) {
+        console.error(err);
+
         if (err instanceof ApiError) {
           const error = err as ApiError;
 

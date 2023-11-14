@@ -14,7 +14,7 @@ export const validators = {
   login: Validators.login,
 };
 
-export const action = Client.createOperation<UpdateInfoResponse, UpdateInfoRequest>({
+export const operation = Client.createOperation<UpdateInfoResponse, UpdateInfoRequest>({
   method: 'post',
   path: Endpoint.create('authApi', '/viewer/info'),
 });

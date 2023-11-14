@@ -16,7 +16,7 @@ export const validators = {
   password: Validators.newPassword,
 };
 
-export const action = Client.createOperation<SignUpResponse, SignUpRequest>({
+export const operation = Client.createOperation<SignUpResponse, SignUpRequest>({
   method: 'post',
   path: Endpoint.create('authApi', '/auth/sign-up'),
 });
