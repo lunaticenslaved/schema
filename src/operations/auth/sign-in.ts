@@ -18,5 +18,5 @@ export const validators = {
 
 export const operation = Client.createOperation<SignInResponse, SignInRequest>({
   method: 'post',
-  path: Endpoint.create('authApi', 'auth/sign-in'),
+  path: Endpoint.create('authApi', '/auth/sign-in'),
 });

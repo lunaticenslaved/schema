@@ -1,21 +1,12 @@
 import { Request, Response } from 'express';
 
 import { ApiError, UnknownError } from '#/errors';
+import { OperationResponse } from '#/utils';
 
 import * as Auth from './auth';
 import * as Viewer from './viewer';
 
 export { Auth, Viewer };
-
-export type OperationResponse<TData> =
-  | {
-      result: TData;
-      error: null;
-    }
-  | {
-      result: null;
-      error: ApiError;
-    };
 
 export type CreateOperationArg<TResponse, TContext> = (
   request: Request,
@@ -29,19 +20,19 @@ export function createOperationWithContext<TContext>(context: TContext) {
       try {
         const result = await fn(request, response, context);
 
-        return response.status(200).json({ result, error: null });
+        return response.status(200).json({ data: result || null, error: null });
       } catch (err) {
         console.error(err);
 
         if (err instanceof ApiError) {
           const error = err as ApiError;
 
-          return response.status(error.status).json({ result: null, error });
+          return response.status(error.status).json({ data: null, error });
         } else {
           const error = err as Error;
 
           return response.status(500).json({
-            result: null,
+            data: null,
             error: new UnknownError({ messages: error.message, status: 500 }),
           });
         }

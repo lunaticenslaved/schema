@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-import { Errors } from '#/errors';
-import { OperationResponse } from '#/operations';
+import { ApiError, Errors } from '#/errors';
 
 export type ClientRequest<TData> = {
   path: string;
@@ -17,6 +16,16 @@ export type CreateActionProps<TRequest> = {
 
 export type Method = 'post';
 
+export type OperationResponse<TData> =
+  | {
+      data: TData;
+      error: null;
+    }
+  | {
+      data: null;
+      error: ApiError;
+    };
+
 function post<TResponse = void, TRequest = void>(props: ClientRequest<TRequest>) {
   return axios.post<TResponse>(props.path, props.data, props.config);
 }
@@ -28,11 +37,11 @@ export const Client = {
     return async (data: TRequest, configLocal?: ClientRequest<TRequest>['config']) => {
       const response = await action(data, configLocal);
 
-      if ('data' in response) {
-        return response.data;
+      if ('error' in response && response.error) {
+        throw response.error;
       }
 
-      throw response.error;
+      return response.data;
     };
   },
   createAction<TResponse = void, TRequest = void>({

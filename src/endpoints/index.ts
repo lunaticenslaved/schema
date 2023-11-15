@@ -3,7 +3,7 @@ const map = {
 };
 
 function create(host: keyof typeof map, path: string) {
-  return `${map[host]}/${path}`.replace('//', '/');
+  return `${map[host]}/${path.replace(/^[//]/, '')}`;
 }
 
 export const Endpoint = {
