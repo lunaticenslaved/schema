@@ -9,6 +9,7 @@ export interface SignInRequest {
 
 export interface SignInResponse {
   user: User;
+  accessToken: string;
 }
 
 export const validators = {

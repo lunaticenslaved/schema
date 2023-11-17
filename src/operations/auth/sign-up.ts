@@ -9,6 +9,7 @@ export type SignUpRequest = {
 
 export type SignUpResponse = {
   user: User;
+  accessToken: string;
 };
 
 export const validators = {

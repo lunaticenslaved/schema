@@ -31,17 +31,14 @@ export function isApiError(error: unknown): error is ApiError {
 }
 
 export function parse(error: unknown) {
-  console.log(1);
   if (typeof error === 'string') {
     return new UnknownError({ messages: error });
   }
 
-  console.log(2);
   if (typeof error !== 'object' || !error) {
     return new UnknownError({ messages: 'Unknown error' });
   }
 
-  console.log(3);
   if (isApiError(error)) {
     return new map[error.type as ApiErrorType]({
       messages: error.messages,
@@ -49,7 +46,6 @@ export function parse(error: unknown) {
     });
   }
 
-  console.log(4);
   if (error instanceof AxiosError) {
     const operationError = error.response?.data.error;
 
@@ -60,18 +56,15 @@ export function parse(error: unknown) {
       });
     }
 
-    console.log('4.1');
     return new UnknownError({
       messages: error.message,
       status: error.status || error.response?.status,
     });
   }
 
-  console.log(5);
   if (error instanceof Error) {
     return new UnknownError({ messages: error.message });
   }
 
-  console.log(6);
   return new UnknownError({ messages: 'Unknown error' });
 }
