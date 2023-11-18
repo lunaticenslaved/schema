@@ -4,16 +4,18 @@ import { Client, Validators } from '#/utils';
 
 export type SignUpRequest = {
   login: string;
+  email: string;
   password: string;
 };
 
 export type SignUpResponse = {
   user: User;
-  accessToken: string;
+  token: string;
 };
 
 export const validators = {
   login: Validators.login,
+  email: Validators.email,
   password: Validators.newPassword,
 };
 

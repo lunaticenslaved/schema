@@ -4,7 +4,7 @@ import { Client } from '#/utils';
 
 export type RefreshResponse = {
   user: User;
-  accessToken: string;
+  token: string;
 };
 
 export const operation = Client.createOperation<RefreshResponse>({

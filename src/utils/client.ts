@@ -4,26 +4,6 @@ import { ApiError, Errors } from '#/errors';
 
 import { merge } from './lodash';
 
-class ActionPromise<TResponse> extends Promise<AxiosResponse<TResponse>> {
-  public unwrapResponse() {
-    return this.then(({ data }) => {
-      return Promise.resolve(data);
-    });
-  }
-}
-
-class OperationPromise<TResponse> extends ActionPromise<OperationResponse<TResponse>> {
-  public unwrapOperation() {
-    return this.then(response => {
-      if ('error' in response.data && response.data.error) {
-        throw response.data.error;
-      }
-
-      return Promise.resolve(response.data.data);
-    });
-  }
-}
-
 export type ClientRequest<TData> = {
   path: string;
   config?: AxiosRequestConfig;
@@ -43,11 +23,11 @@ export type ActionProps<TData> = {
 };
 
 export type Operation<TResponse, TRequest> = {
-  (args?: ActionProps<TRequest>): OperationPromise<TResponse>;
+  (args?: ActionProps<TRequest>): Promise<AxiosResponse<OperationResponse<TResponse>>>;
 };
 
 export type Action<TResponse, TRequest> = {
-  (args?: ActionProps<TRequest>): ActionPromise<TResponse>;
+  (args?: ActionProps<TRequest>): Promise<AxiosResponse<TResponse>>;
 };
 
 export type Method = 'post';
@@ -62,28 +42,40 @@ export type OperationResponse<TData> =
       error: ApiError;
     };
 
+export function isOperation<T>(obj: unknown): obj is OperationResponse<T> {
+  if (!obj) return false;
+  if (typeof obj !== 'object') return false;
+
+  return 'data' in obj && 'error' in obj;
+}
+
 function post<TResponse = void, TRequest = void>(props: ClientRequest<TRequest>) {
   return axios.post<TResponse>(props.path, props.data, props.config);
 }
 
 export const Client = {
+  unwrapOperation<TResponse = void>(response: OperationResponse<TResponse>) {
+    const { data, error } = response;
+
+    if (error) {
+      throw Errors.parse(error);
+    }
+
+    return data as TResponse;
+  },
+
   createOperation<TResponse = void, TRequest = void>(
     args: CreateActionProps,
   ): Operation<TResponse, TRequest> {
-    const action = this.createAction<OperationResponse<TResponse>, TRequest>(args);
-
-    return args => {
-      const promise = new OperationPromise<TResponse>(() => action(args));
-
-      return promise;
-    };
+    return this.createAction<OperationResponse<TResponse>, TRequest>(args);
   },
+
   createAction<TResponse = void, TRequest = void>({
     method,
     path,
     config,
   }: CreateActionProps): Action<TResponse, TRequest> {
-    return args => {
+    return async args => {
       const { data, config: configLocal, token } = args || {};
 
       if (method === 'post') {
@@ -94,15 +86,13 @@ export const Client = {
             headers['Authorization'] = `Bearer ${token}`;
           }
 
-          const promise = new ActionPromise<TResponse>(() =>
-            post<TResponse, TRequest>({
-              path,
-              data,
-              config: merge(config, configLocal, { headers }),
-            }),
-          );
+          const response = await post<TResponse, TRequest>({
+            path,
+            data,
+            config: merge(config, configLocal, { headers }),
+          });
 
-          return promise;
+          return response;
         } catch (error) {
           throw Errors.parse(error);
         }
