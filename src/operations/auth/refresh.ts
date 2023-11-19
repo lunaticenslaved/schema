@@ -1,13 +1,13 @@
-import { Endpoint } from '#/endpoints';
-import { User } from '#/models';
-import { Client } from '#/utils';
+import { Endpoint } from '../../endpoints';
+import { User } from '../../models';
+import { OperationResponse, client } from '../../utils';
 
 export type RefreshResponse = {
   user: User;
   token: string;
 };
 
-export const operation = Client.createOperation<RefreshResponse>({
-  method: 'post',
+export const action = client.createAction<OperationResponse<RefreshResponse>>({
+  method: 'POST',
   path: Endpoint.create('authApi', '/auth/refresh'),
 });

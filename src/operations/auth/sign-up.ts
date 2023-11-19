@@ -1,6 +1,6 @@
-import { Endpoint } from '#/endpoints';
-import { User } from '#/models';
-import { Client, Validators } from '#/utils';
+import { Endpoint } from '../../endpoints';
+import { User } from '../../models';
+import { OperationResponse, Validators, client } from '../../utils';
 
 export type SignUpRequest = {
   login: string;
@@ -19,7 +19,7 @@ export const validators = {
   password: Validators.newPassword,
 };
 
-export const operation = Client.createOperation<SignUpResponse, SignUpRequest>({
-  method: 'post',
+export const action = client.createAction<OperationResponse<SignUpResponse>, SignUpRequest>({
+  method: 'POST',
   path: Endpoint.create('authApi', '/auth/sign-up'),
 });

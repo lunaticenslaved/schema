@@ -1,7 +1,7 @@
-import { Endpoint } from '#/endpoints';
-import { Client } from '#/utils';
+import { Endpoint } from '../../endpoints';
+import { client } from '../../utils';
 
-export const operation = Client.createAction({
-  method: 'post',
+export const operation = client.createAction({
+  method: 'POST',
   path: Endpoint.create('authApi', '/auth/logout'),
 });

@@ -1,6 +1,6 @@
-import { Endpoint } from '#/endpoints';
-import { User } from '#/models';
-import { Client, Validators } from '#/utils';
+import { Endpoint } from '../../endpoints';
+import { User } from '../../models';
+import { Validators, client } from '../../utils';
 
 export type UpdateInfoRequest = {
   login: string;
@@ -14,7 +14,7 @@ export const validators = {
   login: Validators.login,
 };
 
-export const operation = Client.createOperation<UpdateInfoResponse, UpdateInfoRequest>({
-  method: 'post',
+export const action = client.createAction<UpdateInfoResponse, UpdateInfoRequest>({
+  method: 'POST',
   path: Endpoint.create('authApi', '/viewer/info'),
 });

@@ -1,6 +1,6 @@
-import { Endpoint } from '#/endpoints';
-import { User } from '#/models';
-import { Client, Validators } from '#/utils';
+import { Endpoint } from '../../endpoints';
+import { User } from '../../models';
+import { Validators, client } from '../../utils';
 
 export type UpdateAvatarRequest = {
   avatar: object;
@@ -14,7 +14,7 @@ export const validators = {
   avatar: Validators.required('File is required'),
 };
 
-export const operation = Client.createOperation<UpdateAvatarResponse, UpdateAvatarRequest>({
-  method: 'post',
+export const action = client.createAction<UpdateAvatarResponse, UpdateAvatarRequest>({
+  method: 'POST',
   path: Endpoint.create('authApi', '/viewer/avatar'),
 });

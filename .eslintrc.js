@@ -12,6 +12,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['prettier', '@typescript-eslint'],
   rules: {
+    'no-console': 'warn',
     '@typescript-eslint/no-namespace': 0,
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -21,5 +22,5 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ['dist', 'node_modules'],
+  ignorePatterns: ['dist', 'node_modules', 'lib'],
 };

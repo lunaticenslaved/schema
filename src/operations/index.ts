@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { ApiError, UnknownError } from '#/errors';
-import { OperationResponse } from '#/utils';
+import { ApiError, UnknownError } from '../errors';
+import { OperationResponse } from '../utils';
 
 import * as Auth from './auth';
 import * as Viewer from './viewer';
@@ -22,6 +22,7 @@ export function createOperationWithContext<TContext>(context: TContext) {
 
         return response.status(200).json({ data: result || null, error: null });
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(err);
 
         if (err instanceof ApiError) {

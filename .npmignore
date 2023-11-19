@@ -1,5 +1,8 @@
 /src
 /index.ts
 .vscode
+.prettierignore
+tsconfig.json
+rollup.config.mjs
 *.tgz
 

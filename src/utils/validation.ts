@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-import { ValidationError } from '#/errors';
+import { ValidationError } from '../errors';
 
-export type ValidationResult = null | string | string[] | undefined;
-export type Validator<T> = (params?: T) => Promise<ValidationResult> | ValidationResult;
+export type Result = null | string | string[] | undefined;
+export type Validator<T> = (params?: T) => Promise<Result> | Result;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ValidationObject = Record<string, Validator<any>>;
+export type Rules = Record<string, Validator<any>>;
 
-export const validateRequest = async (rules: ValidationObject, values: Record<string, unknown>) => {
+export const validate = async (rules: Rules, values: Record<string, unknown>) => {
   const errors: string[] = [];
 
   for (const key in rules) {

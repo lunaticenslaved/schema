@@ -1,14 +1,8 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { ApiError, Errors } from '#/errors';
+import { ApiError, Errors } from '../errors';
 
 import { merge } from './lodash';
-
-export type ClientRequest<TData> = {
-  path: string;
-  config?: AxiosRequestConfig;
-  data?: TData;
-};
 
 export type CreateActionProps = {
   config?: AxiosRequestConfig;
@@ -22,15 +16,12 @@ export type ActionProps<TData> = {
   token?: string;
 };
 
-export type Operation<TResponse, TRequest> = {
-  (args?: ActionProps<TRequest>): Promise<AxiosResponse<OperationResponse<TResponse>>>;
-};
-
 export type Action<TResponse, TRequest> = {
-  (args?: ActionProps<TRequest>): Promise<AxiosResponse<TResponse>>;
+  (args: ActionProps<TRequest> | undefined, type: 'raw'): Promise<AxiosResponse<TResponse>>;
+  (args?: ActionProps<TRequest>, type?: undefined): Promise<TResponse>;
 };
 
-export type Method = 'post';
+export type Method = 'POST';
 
 export type OperationResponse<TData> =
   | {
@@ -42,43 +33,56 @@ export type OperationResponse<TData> =
       error: ApiError;
     };
 
-export function isOperation<T>(obj: unknown): obj is OperationResponse<T> {
-  if (!obj) return false;
-  if (typeof obj !== 'object') return false;
+export class Client {
+  private axios: AxiosInstance = axios.create();
 
-  return 'data' in obj && 'error' in obj;
-}
+  setAxios(ax: AxiosInstance) {
+    this.axios = ax;
+  }
 
-function post<TResponse = void, TRequest = void>(props: ClientRequest<TRequest>) {
-  return axios.post<TResponse>(props.path, props.data, props.config);
-}
+  isOperation<T>(obj: unknown): obj is OperationResponse<T> {
+    if (!obj) return false;
+    if (typeof obj !== 'object') return false;
 
-export const Client = {
+    return 'data' in obj && 'error' in obj;
+  }
+
+  isAxiosResponse<T>(obj: unknown): obj is AxiosResponse<T> {
+    if (!obj) return false;
+    if (typeof obj !== 'object') return false;
+
+    return 'headers' in obj && 'status' in obj && 'statusText' in obj;
+  }
+
   unwrapOperation<TResponse = void>(response: OperationResponse<TResponse>) {
-    const { data, error } = response;
+    let responseData: unknown = {};
 
-    if (error) {
-      throw Errors.parse(error);
+    if (this.isAxiosResponse(response)) {
+      responseData = response.data;
     }
 
-    return data as TResponse;
-  },
+    if (this.isOperation(responseData)) {
+      const { data, error } = responseData;
 
-  createOperation<TResponse = void, TRequest = void>(
-    args: CreateActionProps,
-  ): Operation<TResponse, TRequest> {
-    return this.createAction<OperationResponse<TResponse>, TRequest>(args);
-  },
+      if (error) {
+        throw Errors.parse(error);
+      }
+
+      return data as TResponse;
+    }
+
+    return response as TResponse;
+  }
 
   createAction<TResponse = void, TRequest = void>({
     method,
     path,
     config,
   }: CreateActionProps): Action<TResponse, TRequest> {
-    return async args => {
+    return async (args, type) => {
       const { data, config: configLocal, token } = args || {};
 
-      if (method === 'post') {
+      if (method === 'POST') {
         try {
           const headers = merge(config?.headers, configLocal?.headers) || {};
 
@@ -86,13 +90,19 @@ export const Client = {
             headers['Authorization'] = `Bearer ${token}`;
           }
 
-          const response = await post<TResponse, TRequest>({
+          const response = await this.axios.post<TResponse>(
             path,
             data,
-            config: merge(config, configLocal, { headers }),
-          });
+            merge(config, configLocal, { headers }),
+          );
 
-          return response;
+          if (type === 'raw') {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return response as any;
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          return response.data as any;
         } catch (error) {
           throw Errors.parse(error);
         }
@@ -100,5 +110,7 @@ export const Client = {
 
       throw new Error('Unknown method');
     };
-  },
-};
+  }
+}
+
+export const client = new Client();
