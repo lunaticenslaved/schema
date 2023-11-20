@@ -5,10 +5,12 @@ export enum ApiErrorType {
   ConflictError = 'ConflictError',
   NotFoundError = 'NotFoundError',
   FileNotProvidedError = 'FileNotProvidedError',
+  ExpiredTokenError = 'ExpiredTokenError',
+  InvalidTokenError = 'InvalidTokenError',
 }
 
 type ApiErrorProps = {
-  messages: string[] | string;
+  messages?: string[] | string;
   status?: number;
 };
 
@@ -20,7 +22,7 @@ export abstract class ApiError extends Error {
   constructor({ messages, status }: ApiErrorProps) {
     super();
 
-    this.messages = typeof messages === 'string' ? [messages] : messages;
+    this.messages = typeof messages === 'string' ? [messages] : messages || [];
 
     if (status) {
       this.status = status;

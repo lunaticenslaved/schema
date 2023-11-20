@@ -27,3 +27,15 @@ export class NotFoundError extends ApiError {
 export class FileNotProvidedError extends ApiError {
   public type = ApiErrorType.FileNotProvidedError;
 }
+
+export class ExpiredTokenError extends ApiError {
+  public type = ApiErrorType.ExpiredTokenError;
+  public override status = 401;
+  public override messages = ['Expired token'];
+}
+
+export class InvalidTokenError extends ApiError {
+  public type = ApiErrorType.ExpiredTokenError;
+  public override status = 401;
+  public override messages = ['Invalid token'];
+}
