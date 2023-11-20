@@ -28,14 +28,14 @@ export class FileNotProvidedError extends ApiError {
   public type = ApiErrorType.FileNotProvidedError;
 }
 
-export class ExpiredTokenError extends ApiError {
-  public type = ApiErrorType.ExpiredTokenError;
+export class TokenExpiredError extends ApiError {
+  public type = ApiErrorType.TokenExpiredError;
   public override status = 401;
   public override messages = ['Expired token'];
 }
 
-export class InvalidTokenError extends ApiError {
-  public type = ApiErrorType.ExpiredTokenError;
+export class TokenInvalidError extends ApiError {
+  public type = ApiErrorType.TokenInvalidError;
   public override status = 401;
   public override messages = ['Invalid token'];
 }
