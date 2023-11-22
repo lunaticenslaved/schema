@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 
 import {
   ApiError,
@@ -50,7 +50,7 @@ export function parse(error: unknown) {
     });
   }
 
-  if (error instanceof AxiosError) {
+  if (isAxiosError(error)) {
     const operationError = error.response?.data.error;
 
     if (operationError && isApiError(operationError)) {

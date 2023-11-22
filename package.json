@@ -1,6 +1,6 @@
 {
   "name": "@lunaticenslaved/schema",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "main": "dist/umd/main.js",
   "types": "dist/umd/main.d.ts",
   "publishConfig": {
