@@ -39,3 +39,9 @@ export class TokenInvalidError extends ApiError {
   public override status = 401;
   public override messages = ['Invalid token'];
 }
+
+export class RefreshTokenExpiredError extends ApiError {
+  public type = ApiErrorType.RefreshTokenExpiredError;
+  public override status = 401;
+  public override messages = ['Refresh token expired'];
+}

@@ -5,8 +5,9 @@ export enum ApiErrorType {
   ConflictError = 'ConflictError',
   NotFoundError = 'NotFoundError',
   FileNotProvidedError = 'FileNotProvidedError',
-  TokenExpiredError = 'ExpiredTokenError',
-  TokenInvalidError = 'InvalidTokenError',
+  TokenExpiredError = 'TokenExpiredError',
+  TokenInvalidError = 'TokenInvalidError',
+  RefreshTokenExpiredError = 'RefreshTokenExpiredError',
 }
 
 type ApiErrorProps = {

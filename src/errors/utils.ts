@@ -6,6 +6,7 @@ import {
   ConflictError,
   FileNotProvidedError,
   NotFoundError,
+  RefreshTokenExpiredError,
   TokenExpiredError,
   TokenInvalidError,
   UnauthorizedError,
@@ -22,6 +23,7 @@ const map: Record<ApiErrorType, typeof UnknownError> = {
   [ApiErrorType.ValidationError]: ValidationError,
   [ApiErrorType.TokenExpiredError]: TokenExpiredError,
   [ApiErrorType.TokenInvalidError]: TokenInvalidError,
+  [ApiErrorType.RefreshTokenExpiredError]: RefreshTokenExpiredError,
 };
 
 export function isApiError(error: unknown): error is ApiError {
