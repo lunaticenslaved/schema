@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { Endpoint, EndpointKey } from '../endpoints';
-import { ApiError, Errors } from '../errors';
+import { Errors } from '../errors';
 
 import { merge } from './lodash';
 
@@ -24,16 +24,6 @@ export type Action<TResponse, TRequest> = {
 };
 
 export type Method = 'POST';
-
-export type OperationResponse<TData> =
-  | {
-      data: TData;
-      error: null;
-    }
-  | {
-      data: null;
-      error: ApiError;
-    };
 
 export class Client {
   private axios: AxiosInstance = axios.create();

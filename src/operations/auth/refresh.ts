@@ -1,5 +1,5 @@
-import { User } from '../../models';
-import { OperationResponse, client } from '../../utils';
+import { OperationResponse, User } from '../../models';
+import { client } from '../../utils';
 
 export type RefreshResponse = {
   user: User;

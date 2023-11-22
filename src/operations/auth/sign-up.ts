@@ -1,5 +1,5 @@
-import { User } from '../../models';
-import { OperationResponse, Validators, client } from '../../utils';
+import { OperationResponse, User } from '../../models';
+import { Validators, client } from '../../utils';
 
 export type SignUpRequest = {
   login: string;

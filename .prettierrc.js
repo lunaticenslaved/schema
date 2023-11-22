@@ -11,7 +11,8 @@ module.exports = {
     "^@lunaticenslaved(.*)$",
     "^#/(.*)$",
     "^../(.*)$",
-    "^./(.*)$"
+    "^./(.*)$",
+    "^(.*).(css|scss|sass)$",
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true

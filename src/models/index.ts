@@ -10,3 +10,5 @@ export type User = {
   isActivated: boolean;
   avatar: Avatar | null;
 };
+
+export * from './operation';
