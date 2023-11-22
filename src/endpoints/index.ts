@@ -2,15 +2,17 @@ const map = {
   authApi: 'https://auth.lunaticenslaved.space/api',
 };
 
-function create(host: keyof typeof map, path: string) {
+export type EndpointKey = keyof typeof map;
+
+function create(host: EndpointKey, path: string) {
   return `${map[host]}/${path.replace(/^[//]/, '')}`;
 }
 
-function setEndpoint(host: keyof typeof map, path: string) {
+function set(host: EndpointKey, path: string) {
   map[host] = path;
 }
 
 export const Endpoint = {
   create,
-  setEndpoint,
+  set,
 };

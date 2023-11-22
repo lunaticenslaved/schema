@@ -2,9 +2,7 @@ import { babel } from '@rollup/plugin-babel';
 import commonJS from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
-import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
-import bundleSize from 'rollup-plugin-bundle-size';
 import nodeExternals from 'rollup-plugin-node-externals';
 
 // TODO do I really need all these builds?
@@ -24,15 +22,15 @@ function plugins({ minified = true, es5 = false, browser = true }) {
   ];
 
   if (minified) {
-    arr.push(terser());
-    arr.push(bundleSize());
+    // arr.push(terser());
+    // arr.push(bundleSize());
   }
 
   if (es5) {
     arr.push(
       babel({
         babelHelpers: 'bundled',
-        // presets: ['@babel/preset-env'],
+        presets: ['@babel/preset-core', '@babel/preset-env'],
       }),
     );
   }
@@ -75,7 +73,7 @@ export default [
       format: 'cjs',
       exports: 'named',
     },
-    plugins: plugins({ minified: true, commonJs: true }),
+    plugins: plugins({ minified: true, commonJs: true, es5: true }),
   },
 
   // CJS for node

@@ -1,4 +1,3 @@
-import { Endpoint } from '../../endpoints';
 import { User } from '../../models';
 import { OperationResponse, Validators, client } from '../../utils';
 
@@ -19,5 +18,6 @@ export const validators = {
 
 export const action = client.createAction<OperationResponse<SignInResponse>, SignInRequest>({
   method: 'POST',
-  path: Endpoint.create('authApi', '/auth/sign-in'),
+  endpoint: 'authApi',
+  path: '/auth/sign-in',
 });

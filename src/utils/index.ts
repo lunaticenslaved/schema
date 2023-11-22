@@ -3,4 +3,5 @@ import * as Validation from './validation';
 import * as Validators from './validators';
 
 export { Validation, Validators, lodash };
+export { ResponseUtils } from './response';
 export { Client, type OperationResponse, client } from './client';

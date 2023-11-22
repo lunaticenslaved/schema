@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { Endpoint, EndpointKey } from '../endpoints';
 import { ApiError, Errors } from '../errors';
 
 import { merge } from './lodash';
@@ -8,6 +9,7 @@ export type CreateActionProps = {
   config?: AxiosRequestConfig;
   method: Method;
   path: string;
+  endpoint: EndpointKey;
 };
 
 export type ActionProps<TData> = {
@@ -40,47 +42,15 @@ export class Client {
     this.axios = ax;
   }
 
-  isOperation<T>(obj: unknown): obj is OperationResponse<T> {
-    if (!obj) return false;
-    if (typeof obj !== 'object') return false;
-
-    return 'data' in obj && 'error' in obj;
-  }
-
-  isAxiosResponse<T>(obj: unknown): obj is AxiosResponse<T> {
-    if (!obj) return false;
-    if (typeof obj !== 'object') return false;
-
-    return 'headers' in obj && 'status' in obj && 'statusText' in obj;
-  }
-
-  unwrapOperation<TResponse = void>(response: OperationResponse<TResponse>) {
-    let responseData: unknown = {};
-
-    if (this.isAxiosResponse(response)) {
-      responseData = response.data;
-    }
-
-    if (this.isOperation(responseData)) {
-      const { data, error } = responseData;
-
-      if (error) {
-        throw Errors.parse(error);
-      }
-
-      return data as TResponse;
-    }
-
-    return response as TResponse;
-  }
-
   createAction<TResponse = void, TRequest = void>({
     method,
-    path,
+    path: uri,
     config,
+    endpoint,
   }: CreateActionProps): Action<TResponse, TRequest> {
     return async (args, type) => {
       const { data, config: configLocal, token } = args || {};
+      const path = Endpoint.create(endpoint, uri);
 
       if (method === 'POST') {
         try {

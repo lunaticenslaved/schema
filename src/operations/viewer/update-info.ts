@@ -1,4 +1,3 @@
-import { Endpoint } from '../../endpoints';
 import { User } from '../../models';
 import { Validators, client } from '../../utils';
 
@@ -16,5 +15,6 @@ export const validators = {
 
 export const action = client.createAction<UpdateInfoResponse, UpdateInfoRequest>({
   method: 'POST',
-  path: Endpoint.create('authApi', '/viewer/info'),
+  endpoint: 'authApi',
+  path: '/viewer/info',
 });
