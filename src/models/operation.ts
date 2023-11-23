@@ -1,6 +1,6 @@
 import { ApiError } from '../errors';
 
-export type OperationResponse<TData> =
+export type OperationResponse<TData = null> =
   | {
       data: TData;
       error: null;
