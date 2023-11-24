@@ -2,6 +2,7 @@ import { OperationResponse } from '../../models';
 import { client } from '../../utils';
 
 import {
+  GetViewerResponse,
   UpdateAvatarRequest,
   UpdateAvatarResponse,
   UpdateInfoRequest,
@@ -11,6 +12,11 @@ import {
 } from './types';
 
 export const actions = {
+  get: client.createAction<OperationResponse<GetViewerResponse>>({
+    method: 'GET',
+    endpoint: 'authApi',
+    path: '/viewer',
+  }),
   updateAvatar: client.createAction<OperationResponse<UpdateAvatarResponse>, UpdateAvatarRequest>({
     method: 'POST',
     endpoint: 'authApi',

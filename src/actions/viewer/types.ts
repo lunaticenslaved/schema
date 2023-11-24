@@ -21,3 +21,7 @@ export interface UpdatePasswordRequest {
 export interface UpdatePasswordResponse {
   user: User;
 }
+
+export interface GetViewerResponse {
+  user: User;
+}

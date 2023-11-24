@@ -23,7 +23,7 @@ export type Action<TResponse, TRequest> = {
   (args?: ActionProps<TRequest>, type?: undefined): Promise<TResponse>;
 };
 
-export type Method = 'POST';
+export type Method = 'POST' | 'GET';
 
 export class Client {
   private axios: AxiosInstance = axios.create();
@@ -42,33 +42,37 @@ export class Client {
       const { data, config: configLocal, token } = args || {};
       const path = Endpoint.create(endpoint, uri);
 
-      if (method === 'POST') {
-        try {
-          const headers = merge(config?.headers, configLocal?.headers) || {};
+      try {
+        const headers = merge(config?.headers, configLocal?.headers) || {};
 
-          if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-          }
-
-          const response = await this.axios.post<TResponse>(
-            path,
-            data,
-            merge(config, configLocal, { headers }),
-          );
-
-          if (type === 'raw') {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            return response as any;
-          }
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          return response.data as any;
-        } catch (error) {
-          throw Errors.parse(error);
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
         }
-      }
 
-      throw new Error('Unknown method');
+        const actualConfig = merge(config, configLocal, { headers });
+
+        let response: AxiosResponse<TResponse> | undefined;
+
+        if (method === 'POST') {
+          response = await this.axios.post<TResponse>(path, data, actualConfig);
+        } else if (method === 'GET') {
+          response = await this.axios.get<TResponse>(path, actualConfig);
+        }
+
+        if (!response) {
+          throw new Error('Response in required!');
+        }
+
+        if (type === 'raw') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          return response as any;
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return response.data as any;
+      } catch (error) {
+        throw Errors.parse(error);
+      }
     };
   }
 }
