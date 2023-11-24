@@ -1,6 +1,6 @@
 {
   "name": "@lunaticenslaved/schema",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "main": "dist/umd/main.js",
   "types": "dist/umd/main.d.ts",
   "publishConfig": {
@@ -23,7 +23,21 @@
     },
     "./.prettierrc.js": "./.prettierrc.js",
     "./.eslintrc.js": "./.eslintrc.js",
-    "./tsconfig.base.json": "./tsconfig.base.json"
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./actions": {
+      "types": {
+        "require": "./dist/umd/actions/index.d.ts",
+        "default": "./dist/umd/actions/index.d.ts"
+      },
+      "browser": {
+        "require": "./dist/browser/main.cjs",
+        "default": "./dist/browser/main.cjs"
+      },
+      "default": {
+        "require": "./dist/node/main.cjs",
+        "default": "./dist/node/main.cjs"
+      }
+    }
   },
   "scripts": {
     "build": "rm -rf dist && tsc --noEmit && npx rollup --config rollup.config.mjs",

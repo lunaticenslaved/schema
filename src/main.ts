@@ -1,14 +1,15 @@
+import { actions, validators } from './actions';
 import { Endpoint } from './endpoints';
 import * as Errors from './errors';
 import * as Models from './models';
-import * as Operation from './operations';
 import { Client, ResponseUtils, Validation, Validators, client } from './utils';
 
 export {
   Errors,
   Validation,
   Validators,
-  Operation,
+  actions,
+  validators,
   Models,
   Endpoint,
   Client,
@@ -19,7 +20,8 @@ export default {
   Errors,
   Validation,
   Validators,
-  Operation,
+  actions,
+  validators,
   Models,
   Endpoint,
   Client,
