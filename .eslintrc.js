@@ -1,37 +1,8 @@
+// eslint-disable-next-line no-undef
 module.exports = {
-  env: {
-    browser: true,
-    es2020: true,
-    node: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:prettier/recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['prettier', '@typescript-eslint', 'unused-imports'],
+  extends: ['./node_modules/@lunaticenslaved/configs/eslint.base.js'],
+  ignorePatterns: ['dist', 'node_modules'],
   rules: {
-    'no-console': 'warn',
-    'no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'error',
-    'unused-imports/no-unused-vars': [
-      'warn',
-      {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
-      },
-    ],
-    '@typescript-eslint/no-namespace': 0,
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-      },
-    ],
+    'no-console': 0,
   },
-  ignorePatterns: ['dist', 'node_modules', 'lib'],
 };
