@@ -1,6 +1,6 @@
 {
   "name": "@lunaticenslaved/schema",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "main": "dist/umd/main.js",
   "types": "dist/umd/main.d.ts",
   "publishConfig": {
@@ -41,7 +41,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsc --noEmit && npx rollup --config rollup.config.mjs",
-    "lint": "eslint --fix --max-warnings=0 . && prettier . --write"
+    "lint:fix": "eslint --fix --max-warnings=0 . && prettier . --write"
   },
   "author": "lunaticenslaved",
   "license": "ISC",

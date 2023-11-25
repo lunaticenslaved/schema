@@ -1,19 +1,20 @@
 module.exports = {
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "singleQuote": true,
-  "semi": true,
-  "arrowParens": "avoid",
-  "bracketSameLine": true,
-  "printWidth": 100,
-  "importOrder": [
-    "^(express|react)(.*)$",
-    "<THIRD_PARTY_MODULES>",
-    "^@lunaticenslaved(.*)$",
-    "^@/(.*)$",
-    "^#/(.*)$",
-    "^(\.\/|\.\.\/)+(.*)$",
-    "^(.*).(css|scss|sass)$",
+  plugins: ['@trivago/prettier-plugin-sort-imports'],
+  singleQuote: true,
+  semi: true,
+  arrowParens: 'avoid',
+  bracketSameLine: true,
+  printWidth: 100,
+  importOrder: [
+    '^(express|react)(.*)$',
+    '<THIRD_PARTY_MODULES>',
+    '^@lunaticenslaved(.*)$',
+    '^@/(.*)$',
+    '^#/(.*)$',
+    '^(../)+(.*)$',
+    '^(./)(.*)$',
+    '^(.*).(css|scss|sass)$',
   ],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
-}
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
+};

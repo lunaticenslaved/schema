@@ -17,7 +17,12 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [
       'warn',
-      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
     ],
     '@typescript-eslint/no-namespace': 0,
     '@typescript-eslint/no-unused-vars': [

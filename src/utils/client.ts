@@ -19,7 +19,7 @@ export type ActionProps<TData> = {
 };
 
 export type Action<TResponse, TRequest> = {
-  (args: ActionProps<TRequest> | undefined, type: 'raw'): Promise<AxiosResponse<TResponse>>;
+  (args: ActionProps<TRequest> | undefined | null, type: 'raw'): Promise<AxiosResponse<TResponse>>;
   (args?: ActionProps<TRequest>, type?: undefined): Promise<TResponse>;
 };
 
