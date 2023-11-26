@@ -1,5 +1,5 @@
 import { actions, validators } from './actions';
-import { Endpoint } from './endpoints';
+import { Endpoints, endpoints } from './endpoints';
 import * as Errors from './errors';
 import * as Models from './models';
 import { Client, ResponseUtils, Validation, Validators, client } from './utils';
@@ -11,7 +11,8 @@ export {
   actions,
   validators,
   Models,
-  Endpoint,
+  Endpoints,
+  endpoints,
   Client,
   client,
   ResponseUtils,
@@ -23,7 +24,8 @@ export default {
   actions,
   validators,
   Models,
-  Endpoint,
+  Endpoints,
+  endpoints,
   Client,
   client,
   ResponseUtils,

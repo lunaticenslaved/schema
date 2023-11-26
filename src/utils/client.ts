@@ -1,15 +1,15 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { Endpoint, EndpointKey } from '../endpoints';
+import { Endpoints, EndpointsMap, endpoints } from '../endpoints';
 import { Errors } from '../errors';
 
 import { merge } from './lodash';
 
-export type CreateActionProps = {
+export type CreateActionProps<TData, TEndpointsMap extends EndpointsMap> = {
   config?: AxiosRequestConfig;
   method: Method;
-  path: string;
-  endpoint: EndpointKey;
+  path: string | ((data: TData) => string);
+  endpoint: keyof TEndpointsMap;
 };
 
 export type ActionProps<TData> = {
@@ -25,11 +25,21 @@ export type Action<TResponse, TRequest> = {
 
 export type Method = 'POST' | 'GET';
 
-export class Client {
-  private axios: AxiosInstance = axios.create();
+export class Client<TEndpointsMap extends EndpointsMap> {
+  axios: AxiosInstance;
+  endpoints: Endpoints<TEndpointsMap>;
+
+  constructor(initialEndpoints: Endpoints<TEndpointsMap>) {
+    this.endpoints = initialEndpoints;
+    this.axios = axios.create();
+  }
 
   setAxios(ax: AxiosInstance) {
     this.axios = ax;
+  }
+
+  setEndpoints(newEndpoints: Endpoints<TEndpointsMap>) {
+    this.endpoints = newEndpoints;
   }
 
   createAction<TResponse = void, TRequest = void>({
@@ -37,10 +47,13 @@ export class Client {
     path: uri,
     config,
     endpoint,
-  }: CreateActionProps): Action<TResponse, TRequest> {
+  }: CreateActionProps<TRequest, TEndpointsMap>): Action<TResponse, TRequest> {
     return async (args, type) => {
       const { data, config: configLocal, token } = args || {};
-      const path = Endpoint.create(endpoint, uri);
+      const path = this.endpoints.createPath(
+        endpoint,
+        typeof uri === 'string' ? uri : uri(data as TRequest),
+      );
 
       try {
         const headers = merge(config?.headers, configLocal?.headers) || {};
@@ -77,4 +90,4 @@ export class Client {
   }
 }
 
-export const client = new Client();
+export const client = new Client(endpoints);

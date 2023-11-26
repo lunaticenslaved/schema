@@ -1,6 +1,6 @@
 {
   "name": "@lunaticenslaved/schema",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "main": "dist/umd/main.js",
   "types": "dist/umd/main.d.ts",
   "publishConfig": {
@@ -21,21 +21,16 @@
         "default": "./dist/node/main.cjs"
       }
     },
-    "./.prettierrc.js": "./.prettierrc.js",
-    "./.eslintrc.js": "./.eslintrc.js",
-    "./tsconfig.base.json": "./tsconfig.base.json",
     "./actions": {
       "types": {
         "require": "./dist/umd/actions/index.d.ts",
         "default": "./dist/umd/actions/index.d.ts"
-      },
-      "browser": {
-        "require": "./dist/browser/main.cjs",
-        "default": "./dist/browser/main.cjs"
-      },
-      "default": {
-        "require": "./dist/node/main.cjs",
-        "default": "./dist/node/main.cjs"
+      }
+    },
+    "./models": {
+      "types": {
+        "require": "./dist/umd/models/index.d.ts",
+        "default": "./dist/umd/models/index.d.ts"
       }
     }
   },
@@ -47,6 +42,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.1",
+    "to-querystring": "^1.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
