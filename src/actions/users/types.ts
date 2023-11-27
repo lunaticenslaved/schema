@@ -7,9 +7,12 @@ export interface GetUserResponse {
   user: User;
 }
 
-export interface ListUserRequest {
-  userIds: string[];
-}
-export interface ListUserResponse {
+export type ListUsersRequest =
+  | { userIds: string[] }
+  | {
+      search: string;
+      take: number;
+    };
+export interface ListUsersResponse {
   users: User[];
 }

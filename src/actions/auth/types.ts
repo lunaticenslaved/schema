@@ -3,6 +3,9 @@ import { User } from '../../models';
 export interface ActivateRequest {
   activationToken: string;
 }
+export interface ActivateResponse {
+  user: User;
+}
 
 export interface RefreshResponse {
   user: User;

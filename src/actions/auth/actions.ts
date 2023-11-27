@@ -3,6 +3,7 @@ import { client } from '../../utils';
 
 import {
   ActivateRequest,
+  ActivateResponse,
   RefreshResponse,
   SignInRequest,
   SignInResponse,
@@ -11,7 +12,7 @@ import {
 } from './types';
 
 export const actions = {
-  activate: client.createAction<OperationResponse, ActivateRequest>({
+  activate: client.createAction<OperationResponse<ActivateResponse>, ActivateRequest>({
     method: 'POST',
     endpoint: 'authApi',
     path: '/auth/activate',

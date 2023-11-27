@@ -3,7 +3,7 @@ import toQueryString from 'to-querystring';
 import { OperationResponse } from '../../models';
 import { client } from '../../utils';
 
-import { GetUserRequest, GetUserResponse, ListUserRequest, ListUserResponse } from './types';
+import { GetUserRequest, GetUserResponse, ListUsersRequest, ListUsersResponse } from './types';
 
 export const actions = {
   get: client.createAction<OperationResponse<GetUserResponse>, GetUserRequest>({
@@ -11,12 +11,9 @@ export const actions = {
     endpoint: 'authApi',
     path: ({ userId }) => `/users/${userId}`,
   }),
-  list: client.createAction<OperationResponse<ListUserResponse>, ListUserRequest>({
+  list: client.createAction<OperationResponse<ListUsersResponse>, ListUsersRequest>({
     method: 'GET',
     endpoint: 'authApi',
-    path: data =>
-      `/users?${toQueryString({
-        userIds: data.userIds,
-      })}`,
+    path: data => `/users?${toQueryString(data)}`,
   }),
 };
