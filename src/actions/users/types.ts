@@ -8,7 +8,10 @@ export interface GetUserResponse {
 }
 
 export type ListUsersRequest =
-  | { userIds: string[] }
+  | {
+      userIds: string[];
+      search?: string;
+    }
   | {
       search: string;
       take: number;
