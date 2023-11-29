@@ -8,7 +8,6 @@
     "declarationMap": false,
 
     /* Bundler mode */
-    "types": ["node"],
     "module": "ES2015",
     "moduleResolution": "Bundler",
 
@@ -16,5 +15,6 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["scripts"]
 }
