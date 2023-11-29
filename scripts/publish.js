@@ -36,4 +36,7 @@ for (const path of paths) {
   fsExtra.copySync(path, `dist/${path}`);
 }
 
-execSync('cd dist && npm publish --dry-run');
+execSync('cd dist && npm publish');
+execSync('cd ..');
+execSync('git add package.json');
+execSync(`git commit -m "chore: update version up to ${packageJson.version}" && git push`);

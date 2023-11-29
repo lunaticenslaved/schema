@@ -1,6 +1,6 @@
 {
   "name": "@lunaticenslaved/schema",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "main": "dist/umd/main.js",
   "types": "dist/umd/main.d.ts",
   "publishConfig": {
@@ -36,7 +36,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && npx rollup --config rollup.config.mjs",
-    "publish": "node scripts/publish.js",
+    "build-and-publish": "npm run build && node scripts/publish.js",
     "lint:fix": "eslint --fix --max-warnings=0 . && prettier . --write"
   },
   "author": "lunaticenslaved",
