@@ -1,36 +1,37 @@
 {
   "name": "@lunaticenslaved/schema",
-  "version": "0.0.43",
-  "main": "dist/umd/main.js",
-  "types": "dist/umd/main.d.ts",
+  "version": "0.0.44",
   "publishConfig": {
     "access": "public"
   },
+  "main": "dist/cjs/main.cjs",
+  "module": "dist/esm/main.js",
+  "types": "dist/types/main.d.ts",
   "exports": {
     ".": {
       "types": {
-        "require": "./dist/umd/main.d.ts",
-        "default": "./dist/umd/main.d.ts"
+        "require": "./dist/types/main.d.ts",
+        "default": "./dist/types/main.d.ts"
       },
       "browser": {
-        "require": "./dist/browser/main.cjs",
-        "default": "./dist/browser/main.cjs"
+        "require": "./dist/esm/main.js",
+        "default": "./dist/esm/main.js"
       },
       "default": {
-        "require": "./dist/node/main.cjs",
-        "default": "./dist/node/main.cjs"
+        "require": "./dist/cjs/main.cjs",
+        "default": "./dist/cjs/main.cjs"
       }
     },
     "./actions": {
       "types": {
-        "require": "./dist/umd/actions/index.d.ts",
-        "default": "./dist/umd/actions/index.d.ts"
+        "require": "./dist/types/actions/index.d.ts",
+        "default": "./dist/types/actions/index.d.ts"
       }
     },
     "./models": {
       "types": {
-        "require": "./dist/umd/models/index.d.ts",
-        "default": "./dist/umd/models/index.d.ts"
+        "require": "./dist/types/models/index.d.ts",
+        "default": "./dist/types/models/index.d.ts"
       }
     }
   },

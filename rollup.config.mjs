@@ -5,15 +5,13 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import nodeExternals from 'rollup-plugin-node-externals';
 
-// TODO do I really need all these builds?
-
-function plugins({ minified = true, es5 = false, browser = true }) {
+function plugins({ minified = true, es5 = false, browser = true, types = false }) {
   const arr = [
     typescript({
       rootDir: './src',
       compilerOptions: {
         sourceMap: false,
-        declaration: true,
+        declaration: types,
         declarationMap: false,
       },
     }),
@@ -42,7 +40,7 @@ function plugins({ minified = true, es5 = false, browser = true }) {
 }
 
 export default [
-  // ESM for browser
+  // ESM
   {
     input: 'src/main.ts',
     output: {
@@ -53,37 +51,23 @@ export default [
     plugins: plugins({ minified: true }),
   },
 
-  // UMD for browser
+  // Types
   {
     input: 'src/main.ts',
     output: {
-      name: 'main',
-      file: 'dist/umd/main.js',
-      format: 'umd',
-      exports: 'named',
+      file: 'dist/types/main.js',
     },
-    plugins: plugins({ minified: true, es5: true }),
+    plugins: plugins({ types: true }),
   },
 
-  // CJS for browser
+  // CJS
   {
     input: 'src/main.ts',
     output: {
-      file: 'dist/browser/main.cjs',
+      file: 'dist/cjs/main.cjs',
       format: 'cjs',
       exports: 'named',
     },
     plugins: plugins({ minified: true, commonJs: true, es5: true }),
-  },
-
-  // CJS for node
-  {
-    input: 'src/main.ts',
-    output: {
-      file: 'dist/node/main.cjs',
-      format: 'cjs',
-      exports: 'named',
-    },
-    plugins: plugins({ minified: true, browser: false, commonJs: true }),
   },
 ];
