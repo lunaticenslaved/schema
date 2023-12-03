@@ -21,6 +21,8 @@ export type ActionProps<TData> = {
 export type Action<TResponse, TRequest> = {
   (args: ActionProps<TRequest> | undefined | null, type: 'raw'): Promise<AxiosResponse<TResponse>>;
   (args?: ActionProps<TRequest>, type?: undefined): Promise<TResponse>;
+
+  isAction: boolean;
 };
 
 export type Method = 'POST' | 'GET';
@@ -48,7 +50,7 @@ export class Client<TEndpointsMap extends EndpointsMap> {
     config,
     endpoint,
   }: CreateActionProps<TRequest, TEndpointsMap>): Action<TResponse, TRequest> {
-    return async (args, type) => {
+    const action: Action<TResponse, TRequest> = async (args, type) => {
       const { data, config: configLocal, token } = args || {};
       const path = this.endpoints.createPath(
         endpoint,
@@ -77,8 +79,7 @@ export class Client<TEndpointsMap extends EndpointsMap> {
         }
 
         if (type === 'raw') {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          return response as any;
+          return response;
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,6 +88,10 @@ export class Client<TEndpointsMap extends EndpointsMap> {
         throw Errors.parse(error);
       }
     };
+
+    action.isAction = true;
+
+    return action;
   }
 }
 
