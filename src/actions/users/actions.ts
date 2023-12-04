@@ -1,19 +1,14 @@
-import toQueryString from 'to-querystring';
-
-import { OperationResponse } from '../../models';
 import { client } from '../../utils';
 
 import { GetUserRequest, GetUserResponse, ListUsersRequest, ListUsersResponse } from './types';
 
 export const actions = {
-  get: client.createAction<OperationResponse<GetUserResponse>, GetUserRequest>({
-    method: 'GET',
+  get: client.createAction<GetUserResponse, GetUserRequest>({
     endpoint: 'authApi',
-    path: ({ userId }) => `/users/${userId}`,
+    path: `/users/get`,
   }),
-  list: client.createAction<OperationResponse<ListUsersResponse>, ListUsersRequest>({
-    method: 'GET',
+  list: client.createAction<ListUsersResponse, ListUsersRequest>({
     endpoint: 'authApi',
-    path: data => `/users?${toQueryString(data)}`,
+    path: `/users/list`,
   }),
 };

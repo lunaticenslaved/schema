@@ -1,4 +1,3 @@
-import { OperationResponse } from '../../models';
 import { client } from '../../utils';
 
 import {
@@ -12,27 +11,20 @@ import {
 } from './types';
 
 export const actions = {
-  get: client.createAction<OperationResponse<GetViewerResponse>>({
-    method: 'GET',
+  get: client.createAction<GetViewerResponse>({
     endpoint: 'authApi',
-    path: '/viewer',
+    path: '/viewer/get',
   }),
-  updateAvatar: client.createAction<OperationResponse<UpdateAvatarResponse>, UpdateAvatarRequest>({
-    method: 'POST',
+  updateAvatar: client.createAction<UpdateAvatarResponse, UpdateAvatarRequest>({
     endpoint: 'authApi',
-    path: '/viewer/avatar',
+    path: '/viewer/update-avatar',
   }),
-  updateInfo: client.createAction<OperationResponse<UpdateInfoResponse>, UpdateInfoRequest>({
-    method: 'POST',
+  updateInfo: client.createAction<UpdateInfoResponse, UpdateInfoRequest>({
     endpoint: 'authApi',
-    path: '/viewer/info',
+    path: '/viewer/update-info',
   }),
-  updatePassword: client.createAction<
-    OperationResponse<UpdatePasswordResponse>,
-    UpdatePasswordRequest
-  >({
-    method: 'POST',
+  updatePassword: client.createAction<UpdatePasswordResponse, UpdatePasswordRequest>({
     endpoint: 'authApi',
-    path: '/viewer/password',
+    path: '/viewer/update-password',
   }),
 };

@@ -1,4 +1,3 @@
-import { OperationResponse } from '../../models';
 import { client } from '../../utils';
 
 import {
@@ -12,33 +11,27 @@ import {
 } from './types';
 
 export const actions = {
-  activate: client.createAction<OperationResponse<ActivateResponse>, ActivateRequest>({
-    method: 'POST',
+  activate: client.createAction<ActivateResponse, ActivateRequest>({
     endpoint: 'authApi',
     path: '/auth/activate',
   }),
   logout: client.createAction({
-    method: 'POST',
     endpoint: 'authApi',
     path: '/auth/logout',
   }),
-  refresh: client.createAction<OperationResponse<RefreshResponse>>({
-    method: 'POST',
+  refresh: client.createAction<RefreshResponse>({
     endpoint: 'authApi',
     path: '/auth/refresh',
   }),
-  resendEmail: client.createAction<OperationResponse>({
-    method: 'POST',
+  resendEmail: client.createAction<void>({
     endpoint: 'authApi',
     path: '/auth/resend-email',
   }),
-  signIn: client.createAction<OperationResponse<SignInResponse>, SignInRequest>({
-    method: 'POST',
+  signIn: client.createAction<SignInResponse, SignInRequest>({
     endpoint: 'authApi',
     path: '/auth/sign-in',
   }),
-  signUp: client.createAction<OperationResponse<SignUpResponse>, SignUpRequest>({
-    method: 'POST',
+  signUp: client.createAction<SignUpResponse, SignUpRequest>({
     endpoint: 'authApi',
     path: '/auth/sign-up',
   }),

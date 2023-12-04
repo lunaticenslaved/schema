@@ -2,12 +2,13 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { Endpoints, EndpointsMap, endpoints } from '../endpoints';
 import { Errors } from '../errors';
+import { OperationResponse } from '../models';
 
 import { merge } from './lodash';
+import { ResponseUtils } from './response';
 
 export type CreateActionProps<TData, TEndpointsMap extends EndpointsMap> = {
   config?: AxiosRequestConfig;
-  method: Method;
   path: string | ((data: TData) => string);
   endpoint: keyof TEndpointsMap;
 };
@@ -19,13 +20,18 @@ export type ActionProps<TData> = {
 };
 
 export type Action<TResponse, TRequest> = {
-  (args: ActionProps<TRequest> | undefined | null, type: 'raw'): Promise<AxiosResponse<TResponse>>;
+  (
+    args: ActionProps<TRequest> | undefined | null,
+    type: 'raw',
+  ): Promise<AxiosResponse<OperationResponse<TResponse>>>;
+  (
+    args: ActionProps<TRequest> | undefined | null,
+    type: 'operation',
+  ): Promise<OperationResponse<TResponse>>;
   (args?: ActionProps<TRequest>, type?: undefined): Promise<TResponse>;
 
   isAction: boolean;
 };
-
-export type Method = 'POST' | 'GET';
 
 export class Client<TEndpointsMap extends EndpointsMap> {
   axios: AxiosInstance;
@@ -45,7 +51,6 @@ export class Client<TEndpointsMap extends EndpointsMap> {
   }
 
   createAction<TResponse = void, TRequest = void>({
-    method,
     path: uri,
     config,
     endpoint,
@@ -65,14 +70,7 @@ export class Client<TEndpointsMap extends EndpointsMap> {
         }
 
         const actualConfig = merge(config, configLocal, { headers });
-
-        let response: AxiosResponse<TResponse> | undefined;
-
-        if (method === 'POST') {
-          response = await this.axios.post<TResponse>(path, data, actualConfig);
-        } else if (method === 'GET') {
-          response = await this.axios.get<TResponse>(path, actualConfig);
-        }
+        const response = await this.axios.post<TResponse>(path, data, actualConfig);
 
         if (!response) {
           throw new Error('Response in required!');
@@ -82,8 +80,14 @@ export class Client<TEndpointsMap extends EndpointsMap> {
           return response;
         }
 
+        const responseData = response.data as OperationResponse<TResponse>;
+
+        if (type === 'operation') {
+          return responseData;
+        }
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return response.data as any;
+        return ResponseUtils.unwrapResponse(responseData) as any;
       } catch (error) {
         throw Errors.parse(error);
       }
