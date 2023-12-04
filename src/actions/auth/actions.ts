@@ -3,6 +3,7 @@ import { client } from '../../utils';
 import {
   ActivateRequest,
   ActivateResponse,
+  RefreshRequest,
   RefreshResponse,
   SignInRequest,
   SignInResponse,
@@ -19,7 +20,7 @@ export const actions = {
     endpoint: 'authApi',
     path: '/auth/logout',
   }),
-  refresh: client.createAction<RefreshResponse>({
+  refresh: client.createAction<RefreshResponse, RefreshRequest>({
     endpoint: 'authApi',
     path: '/auth/refresh',
   }),

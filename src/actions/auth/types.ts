@@ -3,7 +3,7 @@ import { User } from '../../models';
 export interface AuthResponse {
   user: User;
   token: string;
-  tokenExpiresAt: string;
+  expiresAt: string;
 }
 
 export interface ActivateRequest {
@@ -14,11 +14,15 @@ export interface ActivateResponse {
 }
 
 export type RefreshResponse = AuthResponse;
+export interface RefreshRequest {
+  fingerprint: string;
+}
 
 export type SignInResponse = AuthResponse;
 export interface SignInRequest {
   login: string;
   password: string;
+  fingerprint: string;
 }
 
 export type SignUpResponse = AuthResponse;
@@ -26,4 +30,5 @@ export interface SignUpRequest {
   login: string;
   email: string;
   password: string;
+  fingerprint: string;
 }
