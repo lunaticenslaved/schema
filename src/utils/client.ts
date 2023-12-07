@@ -17,6 +17,7 @@ export type ActionProps<TData> = {
   data: TData;
   config?: AxiosRequestConfig;
   token?: string;
+  axios?: AxiosInstance;
 };
 
 export type Action<TResponse, TRequest> = {
@@ -51,16 +52,16 @@ export class Client<TEndpointsMap extends EndpointsMap> {
   }
 
   createAction<TResponse = void, TRequest = void>({
-    path: uri,
+    path,
     config,
     endpoint,
   }: CreateActionProps<TRequest, TEndpointsMap>): Action<TResponse, TRequest> {
     const action: Action<TResponse, TRequest> = async (args, type) => {
-      const { config: configLocal, token } = args || {};
+      const { config: configLocal, token, axios } = args || {};
       const data = args && 'data' in args ? args.data : {};
-      const path = this.endpoints.createPath(
+      const uri = this.endpoints.createPath(
         endpoint,
-        typeof uri === 'string' ? uri : uri(data as TRequest),
+        typeof path === 'string' ? path : path(data as TRequest),
       );
 
       try {
@@ -71,7 +72,7 @@ export class Client<TEndpointsMap extends EndpointsMap> {
         }
 
         const actualConfig = merge(config, configLocal, { headers });
-        const response = await this.axios.post<TResponse>(path, data, actualConfig);
+        const response = await (axios || this.axios).post<TResponse>(uri, data, actualConfig);
 
         if (!response) {
           throw new Error('Response in required!');
