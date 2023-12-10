@@ -32,3 +32,5 @@ export interface SignUpRequest {
   password: string;
   fingerprint: string;
 }
+
+export type ValidateRequestResponse = AuthResponse;
