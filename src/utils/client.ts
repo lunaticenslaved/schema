@@ -11,6 +11,7 @@ export type CreateActionProps<TData, TEndpointsMap extends EndpointsMap> = {
   config?: AxiosRequestConfig;
   path: string | ((data: TData) => string);
   endpoint: keyof TEndpointsMap;
+  prepareData?(data: TData): unknown;
 };
 
 export type ActionProps<TData> = {
@@ -55,14 +56,16 @@ export class Client<TEndpointsMap extends EndpointsMap> {
     path,
     config,
     endpoint,
+    prepareData,
   }: CreateActionProps<TRequest, TEndpointsMap>): Action<TResponse, TRequest> {
     const action: Action<TResponse, TRequest> = async (args, type) => {
       const { config: configLocal, token, axios } = args || {};
-      const data = args && 'data' in args ? args.data || null : {};
-      const uri = this.endpoints.createPath(
-        endpoint,
-        typeof path === 'string' ? path : path(data as TRequest),
-      );
+      let data = (args && 'data' in args ? args.data || null : {}) as TRequest;
+      const uri = this.endpoints.createPath(endpoint, typeof path === 'string' ? path : path(data));
+
+      if (prepareData && data) {
+        data = prepareData(data) as TRequest;
+      }
 
       try {
         const headers = merge(config?.headers, configLocal?.headers) || {};

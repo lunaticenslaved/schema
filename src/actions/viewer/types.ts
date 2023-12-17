@@ -1,7 +1,9 @@
 import { User } from '../../models';
 
 export interface UpdateAvatarRequest {
-  avatar: object;
+  fileBase64: string;
+  mimetype: string;
+  filename: string;
 }
 export interface UpdateAvatarResponse {
   user: User;
