@@ -1,17 +1,20 @@
 import { Action } from '../utils/client';
 
 import * as auth from './auth';
+import * as sessions from './sessions';
 import * as users from './users';
 import * as viewer from './viewer';
 
 export * from './auth/types';
 export * from './viewer/types';
 export * from './users/types';
+export * from './sessions/types';
 
 export const actions = {
   auth: auth.actions,
   viewer: viewer.actions,
   users: users.actions,
+  sessions: sessions.actions,
 
   isAction(action: unknown): action is Action<unknown, unknown> {
     if (typeof action !== 'function') return false;
