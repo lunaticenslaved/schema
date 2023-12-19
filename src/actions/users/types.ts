@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { Service, User } from '../../models';
 
 export interface GetUserRequest {
   userId: string;
@@ -7,15 +7,13 @@ export interface GetUserResponse {
   user: User;
 }
 
-export type ListUsersRequest =
-  | {
-      userIds: string[];
-      search?: string;
-    }
-  | {
-      search: string;
-      take: number;
-    };
+export interface ListUsersRequest {
+  take?: number;
+  userIds?: string[];
+  search?: string;
+  services?: Array<Service>;
+}
+
 export interface ListUsersResponse {
   users: User[];
 }

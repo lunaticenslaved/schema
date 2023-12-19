@@ -9,3 +9,5 @@ export type OperationResponse<TData = null> =
       data: null;
       error: ApiError;
     };
+
+export type Service = 'chat';

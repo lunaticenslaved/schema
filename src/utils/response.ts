@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import { Errors } from '../errors';
-import { OperationResponse } from '../models/operation';
+import { OperationResponse } from '../models';
 
 function isOperationResponse<T>(obj: unknown): obj is OperationResponse<T> {
   if (!obj) return false;

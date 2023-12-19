@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { Service, User } from '../../models';
 
 export interface AuthResponse {
   user: User;
@@ -34,3 +34,6 @@ export interface SignUpRequest {
 }
 
 export type ValidateRequestResponse = AuthResponse;
+export type ValidateRequestRequest = {
+  service: Service;
+};

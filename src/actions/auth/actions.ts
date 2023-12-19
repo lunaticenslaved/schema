@@ -9,6 +9,7 @@ import {
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  ValidateRequestRequest,
   ValidateRequestResponse,
 } from './types';
 
@@ -37,7 +38,7 @@ export const actions = {
     endpoint: 'authApi',
     path: '/auth/sign-up',
   }),
-  validateRequest: client.createAction<ValidateRequestResponse, void>({
+  validateRequest: client.createAction<ValidateRequestResponse, ValidateRequestRequest>({
     endpoint: 'authApi',
     path: '/auth/validate-request',
   }),
