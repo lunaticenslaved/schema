@@ -12,6 +12,7 @@ export interface ListUsersRequest {
   userIds?: string[];
   search?: string;
   services?: Array<Service>;
+  excludeIds?: string[];
 }
 
 export interface ListUsersResponse {
